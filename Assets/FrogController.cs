@@ -22,6 +22,10 @@ public class FrogController : MonoBehaviour {
 	private bool moving = false;
 
 	private float timeToTarget = 0f;
+	private Quaternion up = 		Quaternion.Euler (new Vector3 (0,	0,   0));
+	private Quaternion down = 	Quaternion.Euler (new Vector3 (0,	0, 180));
+	private Quaternion left = 	Quaternion.Euler (new Vector3 (0,	0,  90));
+	private Quaternion right = 	Quaternion.Euler (new Vector3 (0,	0, -90));
 
 	public bool isMoving {
 		get {return moving;}
@@ -33,15 +37,19 @@ public class FrogController : MonoBehaviour {
 	public void Move(string direction){
 		switch(direction) {
 			case "up":
+				frog.rotation = up;
 				movement.y = travelDistance;
 				break;
 			case "down":
+				frog.rotation = down;
 				movement.y = -1f * travelDistance;
 				break;
 			case "left":
+				frog.rotation = left;
 				movement.x = -1f * travelDistance;
 				break;
 			case "right":
+				frog.rotation = right;
 				movement.x = travelDistance;
 				break;
 		}

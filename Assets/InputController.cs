@@ -19,17 +19,19 @@ public class InputController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey (KeyCode.UpArrow)) {
-			activeFrogController.Move("up");
+		if (!activeFrogController.isMoving){
+			if (Input.GetKey (KeyCode.UpArrow)) {
+				activeFrogController.Move("up");
 
-		} else if (Input.GetKey (KeyCode.DownArrow)) {
-			activeFrogController.Move("down");
+			} else if (Input.GetKey (KeyCode.DownArrow)) {
+				activeFrogController.Move("down");
 
-		} else if (Input.GetKey (KeyCode.LeftArrow)) {
-			activeFrogController.Move("left");
+			} else if (Input.GetKey (KeyCode.LeftArrow)) {
+				activeFrogController.Move("left");
 
-		} else if (Input.GetKey (KeyCode.RightArrow)) {
-			activeFrogController.Move("right");
+			} else if (Input.GetKey (KeyCode.RightArrow)) {
+				activeFrogController.Move("right");
+			}
 		}
 	}
 }
