@@ -8,14 +8,35 @@ InputController
     if it gets a letter input, it creates a frog of that type
 
 FrogController
+  //creation
   When a frog is created
     it tells the InputController (with a tag? with a send function?)
-  When a frog is killed
-    it ceases to be active
+
+  //destruction
+  Die()
+    Frog destroyed
+    Decrement lives
+    Unset active frog
+  Win(position)
+    Frog destroyed
+    Unset active frog
+    set position to show frog's letter
   When a frog reaches an end point
-    it ceases to be active
-  When it collides with enemy
-    frog ceases to be active (maybe is destroyed?)
+    Win(what end point)
+  When a frog lands in water not on a log
+    Die()
+  When a frog intersects a vehicle
+    Die()
+
+  //movement
+  When a frog gets input from InputController
+    move in that direction
+    veolcity = (that direction * speed) + basicMove
+  When a frog is on a log
+    basicMove = the log's movement veolcity
+  basicMove = speed that frog will move without input
+  NOTE: movement is SUM of log movement and active movement
+
 
 GAME COMPONENTS
 
