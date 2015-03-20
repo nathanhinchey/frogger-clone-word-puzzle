@@ -1,0 +1,23 @@
+SCRIPTS
+
+InputController
+  gets input
+  If there is an active frog
+    sends input to the current active frog
+  If there is no currently active frog
+    if it gets a letter input, it creates a frog of that type
+
+FrogController
+  When a frog is created
+    it tells the InputController (with a tag? with a send function?)
+  When a frog is killed
+    it ceases to be active
+  When a frog reaches an end point
+    it ceases to be active
+  When it collides with enemy
+    frog ceases to be active (maybe is destroyed?)
+
+GAME COMPONENTS
+
+Frog
+  Has: FrogController

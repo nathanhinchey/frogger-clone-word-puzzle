@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FrogMovement : MonoBehaviour {
+public class FrogController : MonoBehaviour {
 
 //	private enum D {UP, DOWN, LEFT, RIGHT, STOP}
 //
@@ -14,13 +14,13 @@ public class FrogMovement : MonoBehaviour {
 	public float yMax = 7f;
 	public float yMin = -6f;
 
-
-	float debuggingValue;
-
 	private Transform frog;
 	private Vector3 jumpFrom;
 	private Vector3 jumpTo;
 	private bool isJumping;
+
+	private GameObject gameController;
+	private InputController inputController;
 
 	private Vector3 movement = Vector3.zero;
 
@@ -28,9 +28,38 @@ public class FrogMovement : MonoBehaviour {
 
 	private float timeToTarget = 0f;
 
+	//PUBLIC METHODS
+
+
+	public void Move(string direction){
+		switch(direction) {
+			case "up":
+				movement.y = travelDistance;
+				break;
+			case "down":
+				movement.y = -1f * travelDistance;
+				break;
+			case "left":
+				movement.x = -1f * travelDistance;
+				break;
+			case "right":
+				movement.x = travelDistance;
+				break;
+		}
+
+		AfterDirection();
+	}
+
+	//PRIVATE METHODS
+
 	// Use this for initialization
 	void Awake () {
 		frog = this.gameObject.transform;
+
+		gameController = GameObject.FindWithTag("GameController");
+		inputController = gameController.GetComponent<InputController>();
+		inputController.SetActiveFrog(this.gameObject);
+
 	}
 
 	bool IsInBounds(Vector3 location){
@@ -42,8 +71,6 @@ public class FrogMovement : MonoBehaviour {
 		else
 			return false;
 	}
-
-
 
 	void AfterDirection(){
 		if (IsInBounds (frog.position + movement)){
@@ -67,28 +94,6 @@ public class FrogMovement : MonoBehaviour {
 			frog.position = jumpTo;
 			moving = false;
 		}
-
-		if (moving == false) {
-			if (Input.GetKey (KeyCode.UpArrow)) {
-				movement.y = travelDistance;
-				//TODO: rotate to face up
-
-			} else if (Input.GetKey (KeyCode.DownArrow)) {
-				movement.y = -1f * travelDistance;
-				//TODO: rotate to face down
-
-			} else if (Input.GetKey (KeyCode.LeftArrow)) {
-				movement.x = -1f * travelDistance;
-				//rotate to face left
-
-			} else if (Input.GetKey (KeyCode.RightArrow)) {
-				movement.x = travelDistance;
-				//rotate to face right
-			}
-
-			AfterDirection();
-
-		} else
-			frog.position = Vector3.Lerp(jumpTo,jumpFrom, (timeToTarget - Time.time) / travelTimeSeconds );
+		frog.position = Vector3.Lerp(jumpTo,jumpFrom, (timeToTarget - Time.time) / travelTimeSeconds );
 	}
 }
