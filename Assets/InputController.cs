@@ -31,6 +31,5 @@ public class InputController : MonoBehaviour {
 		} else if (Input.GetKey (KeyCode.RightArrow)) {
 			activeFrogController.Move("right");
 		}
-
 	}
 }

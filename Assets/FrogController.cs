@@ -3,10 +3,6 @@ using System.Collections;
 
 public class FrogController : MonoBehaviour {
 
-//	private enum D {UP, DOWN, LEFT, RIGHT, STOP}
-//
-//	private D moveDirection;
-
 	public float travelTimeSeconds = 1.0f;
 	public float travelDistance = 1.0f;
 	public float xMax = 7f;
@@ -17,7 +13,6 @@ public class FrogController : MonoBehaviour {
 	private Transform frog;
 	private Vector3 jumpFrom;
 	private Vector3 jumpTo;
-	private bool isJumping;
 
 	private GameObject gameController;
 	private InputController inputController;
@@ -27,6 +22,10 @@ public class FrogController : MonoBehaviour {
 	private bool moving = false;
 
 	private float timeToTarget = 0f;
+
+	public bool isMoving {
+		get {return moving;}
+	}
 
 	//PUBLIC METHODS
 
@@ -94,6 +93,8 @@ public class FrogController : MonoBehaviour {
 			frog.position = jumpTo;
 			moving = false;
 		}
-		frog.position = Vector3.Lerp(jumpTo,jumpFrom, (timeToTarget - Time.time) / travelTimeSeconds );
+		if (moving)
+			frog.position = Vector3.Lerp
+				(jumpTo, jumpFrom, (timeToTarget - Time.time) / travelTimeSeconds );
 	}
 }
