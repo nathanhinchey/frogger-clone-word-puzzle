@@ -21,6 +21,10 @@ public class FrogController : MonoBehaviour {
 	private InputController inputController;
 	private Vector3 movement = Vector3.zero;
 
+	private Vector3 jumpValue = Vector3.zero;
+	private Vector3 oldPosition;
+	private Vector3 referenceFrame = Vector3.zero;
+
 	private bool moving = false;
 	private float timeToTarget = 0f;
 
@@ -36,12 +40,16 @@ public class FrogController : MonoBehaviour {
 	}
 	public Vector3 restingSpeed {
 		get {return basicMove;}
+		set {
+			basicMove = value;
+		}
 	}
 
 	//PUBLIC METHODS
 
 
 	public void Move(string direction){
+		moving = true;
 		switch(direction) {
 			case "up":
 				frog.rotation = up;
@@ -87,36 +95,27 @@ public class FrogController : MonoBehaviour {
 	}
 
 	void AfterDirection(){
-		if (IsInBounds (frog.position + movement)){
+		if (IsInBounds (frog.localPosition + movement)){
 			moving = true;
 			timeToTarget = Time.time + travelTimeSeconds;
-			jumpFrom = frog.position;
-			jumpTo = frog.position + movement;
+			jumpTo = frog.localPosition + movement;
+			jumpFrom = frog.localPosition;
 		}
-		else {
-			movement = Vector3.zero;
-		}
+		// Debug.Log("jumpTo = " + jumpTo + "; jumpFrom = " + jumpFrom + "; frog.Position = " + frog.position);
+		Debug.Log("Local position: " + frog.localPosition + "; Global position: " + frog.position);
+		movement = Vector3.zero;
 	}
 
 	// Update is called once per frame
-	void Update () {
-
-		movement.x = 0f;
-		movement.y = 0f;
-
-		if (moving && (frog.position - jumpTo).magnitude < 0.1) {
-			frog.position = jumpTo;
-			moving = false;
-		}
-
-		//TODO: get rid of this conditional
+	void FixedUpdate () {
 		if (moving){
-			frog.position = Vector3.Lerp
-					(jumpTo, jumpFrom, (timeToTarget - Time.time) / travelTimeSeconds )
-					+ basicMove;
-		}
-		else {
-			frog.position += basicMove;
+			if ( (jumpValue - jumpTo).magnitude < 0.1f || ((timeToTarget - Time.time) / travelTimeSeconds) < -0.1){
+			 	frog.localPosition = jumpTo;
+				moving = false;
+			}
+			else
+				frog.localPosition = Vector3.Lerp
+						(jumpTo, jumpFrom, (timeToTarget - Time.time) / travelTimeSeconds);
 		}
 	}
 }

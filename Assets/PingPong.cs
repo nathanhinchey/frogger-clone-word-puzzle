@@ -15,6 +15,25 @@ public class PingPong : MonoBehaviour {
 	private Transform thisThing;
 	private float switchTime;
 
+	private GameObject frog;
+
+	public Vector3 speed {
+		get {return (pointA - pointB) / ( travelTimeSeconds * Time.deltaTime) ;}
+	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		frog = other.gameObject;
+		if (frog.CompareTag("Player")){
+			frog.transform.parent = gameObject.transform;
+		}
+	}
+	void OnTriggerExit2D(Collider2D other){
+		frog = other.gameObject;
+		if (frog.CompareTag("Player")){
+			frog.transform.parent = null;
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		arrivalTime = travelTimeSeconds;

@@ -19,6 +19,7 @@ public class InputController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
 		if (!activeFrogController.isMoving){
 			if (Input.GetKey (KeyCode.UpArrow)) {
 				activeFrogController.Move("up");
