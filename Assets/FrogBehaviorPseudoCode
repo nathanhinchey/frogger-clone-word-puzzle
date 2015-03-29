@@ -34,6 +34,8 @@ FrogController
     veolcity = (that direction * speed) + basicMove
   When a frog is on a log
     basicMove = the log's movement veolcity
+  When a frog reaches its destination (within tolerance)
+    it stops its active moves
   basicMove = speed that frog will move without input
   NOTE: movement is SUM of log movement and active movement
 

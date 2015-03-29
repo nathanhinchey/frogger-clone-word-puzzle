@@ -6,28 +6,30 @@ public class FrogController : MonoBehaviour {
 	// Variables to be set in Inspector
 	public float travelTimeSeconds = 1.0f;
 	public float travelDistance = 1.0f;
+
+			// boundaries
 	public float xMax = 7f;
 	public float xMin = -7f;
 	public float yMax = 7f;
 	public float yMin = -6f;
 
 	// Private Variables
-	private Vector3 basicMove;
-	private Transform frog;
-	private Vector3 jumpFrom;
-	private Vector3 jumpTo;
+	private Vector3 target;
 	private Vector3 activeMovement;
+	private Vector3 basicMove;
+
+	private Transform frog;
 	private GameObject gameController;
 	private InputController inputController;
-	private Vector3 movement = Vector3.zero;
 
-	private Vector3 jumpValue = Vector3.zero;
-	private Vector3 oldPosition;
-	private Vector3 referenceFrame = Vector3.zero;
+
+	private Vector3 movement = Vector3.zero; //sum of basicMove and activeMove
+
 
 	private bool moving = false;
 	private float timeToTarget = 0f;
 
+		// these are for frog rotation
 	private Quaternion up = 		Quaternion.Euler (new Vector3 (0,	0,   0));
 	private Quaternion down = 	Quaternion.Euler (new Vector3 (0,	0, 180));
 	private Quaternion left = 	Quaternion.Euler (new Vector3 (0,	0,  90));
@@ -40,8 +42,7 @@ public class FrogController : MonoBehaviour {
 	}
 	public Vector3 restingSpeed {
 		get {return basicMove;}
-		set {
-			basicMove = value;
+		set {basicMove = value;
 		}
 	}
 
@@ -53,19 +54,19 @@ public class FrogController : MonoBehaviour {
 		switch(direction) {
 			case "up":
 				frog.rotation = up;
-				movement.y = travelDistance;
+				activeMovement.y = travelDistance;
 				break;
 			case "down":
 				frog.rotation = down;
-				movement.y = -1f * travelDistance;
+				activeMovement.y = -1f * travelDistance;
 				break;
 			case "left":
 				frog.rotation = left;
-				movement.x = -1f * travelDistance;
+				activeMovement.x = -1f * travelDistance;
 				break;
 			case "right":
 				frog.rotation = right;
-				movement.x = travelDistance;
+				activeMovement.x = travelDistance;
 				break;
 		}
 
