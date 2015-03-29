@@ -30,12 +30,13 @@ FrogController
 
   //movement
   When a frog gets input from InputController
-    move in that direction
-    veolcity = (that direction * speed) + basicMove
+    add activeMovement in that direction
+    veolcity = (activeMovement * speed) + basicMove
   When a frog is on a log
     basicMove = the log's movement veolcity
   When a frog reaches its destination (within tolerance)
-    it stops its active moves
+    activeMovement = 0
+    moving = false
   basicMove = speed that frog will move without input
   NOTE: movement is SUM of log movement and active movement
 

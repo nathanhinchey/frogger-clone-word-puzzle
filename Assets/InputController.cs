@@ -22,7 +22,7 @@ public class InputController : MonoBehaviour {
 
 		if (!activeFrogController.isMoving){
 			if (Input.GetKey (KeyCode.UpArrow)) {
-				activeFrogController.Move("up");
+				activeFrogController.Move("up"); 
 
 			} else if (Input.GetKey (KeyCode.DownArrow)) {
 				activeFrogController.Move("down");
