@@ -1,3 +1,6 @@
+//  thoughts: what if parent gets assigned ONLY if
+// frog.moving == false?
+
 ﻿using UnityEngine;
 using System.Collections;
 

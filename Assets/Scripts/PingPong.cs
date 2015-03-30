@@ -24,7 +24,9 @@ public class PingPong : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		frog = other.gameObject;
 		if (frog.CompareTag("Player")){
-			frog.transform.parent = gameObject.transform;
+			// NOTE: I haven't tested this before commiting.
+			if (!frog.isMoving)
+				frog.transform.parent = gameObject.transform;
 		}
 	}
 	void OnTriggerExit2D(Collider2D other){
